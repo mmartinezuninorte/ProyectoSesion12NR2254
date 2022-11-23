@@ -1,15 +1,26 @@
-const path = require('path')
+// importando path para el manejo de nuestras rutas
+const path = require('path');
 
-const express = require('express')
-const app = express()
+// importando express y levantando a partir de el app
+const express = require('express');
+const app = express();
 
-app.use(express.static(path.join(__dirname,'public')))
+// ruta principal de mis archivos estaticos
+app.use(express.static(path.join(__dirname,'public')));
 
+// seteo puerto
+app.set('port', 8012);
 
-console.log(path.join(__dirname,'public'))
-app.set('port', 8012)
-
+//levantamos servidor en el puerto indicado
 const server = app.listen(app.get('port'),()=>{
-    console.log('Server levantado en el puerto', app.get('port'))
+    console.log('Server levantado en el puerto', app.get('port'));
  })
 
+ //-----------------------------------------------------------
+//socketIO
+const socketIO = require('socket.io')
+const io = socketIO(server)
+
+io.on('connection',()=>{
+    console.log("Nuevo usuario conectado")
+})
