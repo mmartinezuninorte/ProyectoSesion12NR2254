@@ -21,6 +21,12 @@ const server = app.listen(app.get('port'),()=>{
 const socketIO = require('socket.io')
 const io = socketIO(server)
 
-io.on('connection',()=>{
-    console.log("Nuevo usuario conectado")
+io.on('connection', (socket)=>{
+    console.log('Nuevo usuario conectado',socket.id)
+
+    socket.on('chatmensaje', (data)=>{
+        console.log(data)
+        socket.emit('mensajeServidor',(data))
+    })
+
 })
